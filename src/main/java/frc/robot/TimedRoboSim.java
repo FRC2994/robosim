@@ -25,6 +25,8 @@ public class TimedRoboSim {
 	public void startCompetition() {
 		this.robotInit();
 		this.autonomousInit();
+
+		this.run_auto_loop();
 	}
 
 	private void run_auto_loop() {
@@ -33,15 +35,12 @@ public class TimedRoboSim {
 		while (!should_cancel) {
 			this.autonomousPeriodic();
 
-			Thread.sleep((long)this.m_period);
+			try {
+				Thread.sleep((long)this.m_period);
+			} catch(InterruptedException e) {
+				System.out.println("got interrupted!");
+			}
 		}
-	}
-
-	/**
-	 * Override me to be called during autonomous operation!
-	 */
-	public void autonomousPeriodic() {
-
 	}
 
 	/**
@@ -54,19 +53,8 @@ public class TimedRoboSim {
    * until RobotInit() exits. Code in RobotInit() that waits for enable will cause the robot to
    * never indicate that the code is ready, causing the robot to be bypassed in a match.
    */
-
 	public void robotInit() {
 		System.out.println("Default robotInit() method... Override me!");
-	}
-
-	/**
-	 * Initialization code for disabled mode should go here.
-	 *
-	 * <p>Users should override this method for initialization code which will be called each time the
-	 * robot enters disabled mode.
-	 */
-	public void disabledInit() {
-		System.out.println("Default disabledInit() method... Override me!");
 	}
 
 	/**
@@ -80,6 +68,13 @@ public class TimedRoboSim {
 	}
 
 	/**
+	 * Override me to be called during autonomous operation!
+	 */
+	public void autonomousPeriodic() {
+		System.out.println("Default autonomousPeriodic() method... Override me!");
+	}
+
+	/**
 	 * Initialization code for teleop mode should go here.
 	 *
 	 * <p>Users should override this method for initialization code which will be called each time the
@@ -87,5 +82,12 @@ public class TimedRoboSim {
 	 */
 	public void teleopInit() {
 		System.out.println("Default teleopInit() method... Override me!");
+	}
+
+	/**
+	 * This function is called periodically during operator control.
+	 */
+	public void teleopPeriodic() { 
+		System.out.println("Default teleopPeriodic() method... Override me!");
 	}
 }
