@@ -23,6 +23,7 @@ public class TimedRoboSim {
 	}
 
 	public void startCompetition() {
+		System.out.println("Starting Competion...");
 		this.robotInit();
 		this.autonomousInit();
 
